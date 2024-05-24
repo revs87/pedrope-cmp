@@ -1,4 +1,6 @@
+import android.content.ContentResolver
 import android.content.Context
+import android.net.Uri
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import androidx.annotation.OptIn
@@ -19,6 +21,24 @@ import com.rvcoding.pedropeapp.di.Static
 
 
 @UnstableApi
+private fun AndroidPlayer.getMediaSourceFromRawResource(context: Context): ProgressiveMediaSource {
+    val rawResourceId = context.resources.getIdentifier(Player.FILE_NAME, "raw", context.packageName)
+    val uri = Uri.Builder().scheme(ContentResolver.SCHEME_ANDROID_RESOURCE).path(rawResourceId.toString()).build()
+    val mediaItem = MediaItem.fromUri(uri)
+    val dataSourceFactory = DefaultDataSource.Factory(context)
+    val mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(mediaItem)
+    return mediaSource
+}
+
+@UnstableApi
+private fun AndroidPlayer.getMediaSourceFromURL(context: Context): ProgressiveMediaSource {
+    val mediaItem = MediaItem.fromUri(Player.URL_MP4_EXAMPLE)
+    val dataSourceFactory = DefaultDataSource.Factory(context)
+    val mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(mediaItem)
+    return mediaSource
+}
+
+@UnstableApi
 class AndroidPlayer : Player {
     private val context: Context = Static.context
     private var exoPlayer: ExoPlayer = ExoPlayer.Builder(context).build()
@@ -28,10 +48,7 @@ class AndroidPlayer : Player {
 //            .build()
 
     init {
-        val mediaItem = MediaItem.fromUri(Player.URL_MP4_EXAMPLE)
-        val dataSourceFactory = DefaultDataSource.Factory(context)
-        val mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(mediaItem)
-        exoPlayer.setMediaSource(mediaSource)
+        exoPlayer.setMediaSource(getMediaSourceFromRawResource(context))
         exoPlayer.prepare()
     }
 
