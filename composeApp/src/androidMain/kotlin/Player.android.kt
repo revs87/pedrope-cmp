@@ -34,7 +34,9 @@ class AndroidPlayer : Player {
     override fun View() {
         val playerView = remember {
             PlayerView(context).apply {
+                exoPlayer.repeatMode = ExoPlayer.REPEAT_MODE_ONE
                 player = exoPlayer // Set the ExoPlayer instance to PlayerView
+                useController = false // Hide the default controller
                 layoutParams = ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT) // Or your desired dimensions
             }
         }
