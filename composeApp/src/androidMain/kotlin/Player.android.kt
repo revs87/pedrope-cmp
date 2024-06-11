@@ -1,6 +1,4 @@
-import android.content.ContentResolver
 import android.content.Context
-import android.net.Uri
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import androidx.annotation.OptIn
@@ -11,32 +9,12 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
-import androidx.media3.common.MediaItem
 import androidx.media3.common.util.UnstableApi
-import androidx.media3.datasource.DefaultDataSource
 import androidx.media3.exoplayer.ExoPlayer
-import androidx.media3.exoplayer.source.ProgressiveMediaSource
 import androidx.media3.ui.PlayerView
 import com.rvcoding.pedropeapp.di.Static
+import com.rvcoding.pedropeapp.utils.getMediaSourceFromRawResource
 
-
-@UnstableApi
-private fun AndroidPlayer.getMediaSourceFromRawResource(context: Context): ProgressiveMediaSource {
-    val rawResourceId = context.resources.getIdentifier(Player.FILE_NAME, "raw", context.packageName)
-    val uri = Uri.Builder().scheme(ContentResolver.SCHEME_ANDROID_RESOURCE).path(rawResourceId.toString()).build()
-    val mediaItem = MediaItem.fromUri(uri)
-    val dataSourceFactory = DefaultDataSource.Factory(context)
-    val mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(mediaItem)
-    return mediaSource
-}
-
-@UnstableApi
-private fun AndroidPlayer.getMediaSourceFromURL(context: Context): ProgressiveMediaSource {
-    val mediaItem = MediaItem.fromUri(Player.URL_MP4_EXAMPLE)
-    val dataSourceFactory = DefaultDataSource.Factory(context)
-    val mediaSource = ProgressiveMediaSource.Factory(dataSourceFactory).createMediaSource(mediaItem)
-    return mediaSource
-}
 
 @UnstableApi
 class AndroidPlayer : Player {
