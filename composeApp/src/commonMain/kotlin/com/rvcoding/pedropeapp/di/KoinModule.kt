@@ -1,4 +1,4 @@
-package di
+package com.rvcoding.pedropeapp.di
 
 import com.russhwolf.settings.Settings
 import org.koin.core.context.startKoin

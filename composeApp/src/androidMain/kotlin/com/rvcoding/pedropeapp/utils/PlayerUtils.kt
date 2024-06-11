@@ -1,7 +1,5 @@
 package com.rvcoding.pedropeapp.utils
 
-import AndroidPlayer
-import Player
 import android.content.ContentResolver
 import android.content.Context
 import android.net.Uri
@@ -9,6 +7,8 @@ import androidx.media3.common.MediaItem
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.datasource.DefaultDataSource
 import androidx.media3.exoplayer.source.ProgressiveMediaSource
+import com.rvcoding.pedropeapp.domain.player.AndroidPlayer
+import com.rvcoding.pedropeapp.domain.player.Player
 
 
 @UnstableApi

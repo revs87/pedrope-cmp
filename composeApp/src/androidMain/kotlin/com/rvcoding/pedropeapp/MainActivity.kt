@@ -1,22 +1,25 @@
 package com.rvcoding.pedropeapp
 
-import App
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import di.initializeKoin
-import com.rvcoding.pedropeapp.di.initializeKoin as internalInitializeKoin
+import com.rvcoding.pedropeapp.di.androidStaticInitialize
+import com.rvcoding.pedropeapp.di.initializeKoin
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        internalInitializeKoin(this)
+        androidStaticInitialize(this)
         initializeKoin()
-        enableEdgeToEdge()
 
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.dark(1),
+            navigationBarStyle = SystemBarStyle.dark(1)
+        )
         setContent {
             App()
         }

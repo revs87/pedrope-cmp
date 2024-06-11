@@ -1,3 +1,5 @@
+package com.rvcoding.pedropeapp.domain.player
+
 import androidx.compose.runtime.Composable
 
 interface Player {

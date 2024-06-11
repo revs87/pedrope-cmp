@@ -1,3 +1,5 @@
+package com.rvcoding.pedropeapp.domain.player
+
 import android.content.Context
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
