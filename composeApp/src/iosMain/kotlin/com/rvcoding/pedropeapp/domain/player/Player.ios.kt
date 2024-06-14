@@ -1,31 +1,32 @@
-@file:OptIn(ExperimentalForeignApi::class)
-
 package com.rvcoding.pedropeapp.domain.player
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.interop.UIKitView
+import com.rvcoding.pedropeapp.utils.getMediaSourcePlayerFromRawResource
 import kotlinx.cinterop.CValue
 import kotlinx.cinterop.ExperimentalForeignApi
-import platform.AVFoundation.AVPlayer
+import platform.AVFoundation.AVPlayerActionAtItemEndNone
 import platform.AVFoundation.AVPlayerLayer
+import platform.AVFoundation.actionAtItemEnd
 import platform.AVFoundation.pause
 import platform.AVFoundation.play
 import platform.AVKit.AVPlayerViewController
 import platform.CoreGraphics.CGRect
-import platform.Foundation.NSURL
 import platform.QuartzCore.CATransaction
 import platform.QuartzCore.kCATransactionDisableActions
 import platform.UIKit.UIView
 
 
+@OptIn(ExperimentalForeignApi::class)
 class IosPlayer : Player {
-    private val player = AVPlayer(uRL = NSURL.URLWithString(Player.URL_MP4_EXAMPLE)!!)
+    private val player = getMediaSourcePlayerFromRawResource()
     private val playerLayer = AVPlayerLayer()
     private val avPlayerViewController = AVPlayerViewController()
 
     init {
+        player.actionAtItemEnd = AVPlayerActionAtItemEndNone
         avPlayerViewController.player = player
         avPlayerViewController.showsPlaybackControls = true
         playerLayer.player = player
