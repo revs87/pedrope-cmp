@@ -8,6 +8,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.rvcoding.pedropeapp.di.androidStaticInitialize
+import com.rvcoding.pedropeapp.di.destroyKoin
 import com.rvcoding.pedropeapp.di.initializeKoin
 
 class MainActivity : ComponentActivity() {
@@ -23,6 +24,11 @@ class MainActivity : ComponentActivity() {
         setContent {
             App()
         }
+    }
+
+    override fun onDestroy() {
+        destroyKoin()
+        super.onDestroy()
     }
 }
 
