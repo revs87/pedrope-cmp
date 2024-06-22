@@ -78,7 +78,7 @@ fun RotatingImage(image: DrawableResource) {
 
     Image(
         modifier = Modifier
-            .padding(12.dp)
+            .padding(bottom = 48.dp, end = 12.dp)
             .size(64.dp)
             .graphicsLayer {
                 rotationZ = angle
