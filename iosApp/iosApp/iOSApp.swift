@@ -23,4 +23,12 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     func applicationWillResignActive(_ application: UIApplication) {
        UIApplication.shared.isIdleTimerDisabled = false
     }
+
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        UIApplication.shared.isIdleTimerDisabled = true
+    }
+
+    func applicationWillTerminate(_ application: UIApplication) {
+        KoinModuleKt.destroyKoin()
+    }
 }
