@@ -6,6 +6,7 @@ import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,8 +30,14 @@ import coil3.compose.setSingletonImageLoaderFactory
 import coil3.request.crossfade
 import coil3.util.DebugLogger
 import com.rvcoding.pedropeapp.presentation.VideoScreen
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
+import pedropeapp.composeapp.generated.resources.Res
+import pedropeapp.composeapp.generated.resources.raccoon
 
+@OptIn(ExperimentalResourceApi::class)
 @Composable
 @Preview
 fun App() {
@@ -50,16 +57,40 @@ fun App() {
                 VideoScreen()
             }
 
-            RotatingImage(
-                imageUrl = "https://yt3.googleusercontent.com/BAC0XLkL-GL6oq1MFWRRxV7GqJMZC7vbh0Q6QMg753E6oJZngV33QQ6cvAnZWLB5OOx9nOh7KSQ=s900-c-k-c0x00ffffff-no-rj"
-            )
+            RotatingImage(Res.drawable.raccoon)
         }
     }
 }
 
+
+@OptIn(ExperimentalResourceApi::class)
+@Composable
+fun RotatingImage(image: DrawableResource) {
+    val infiniteTransition = rememberInfiniteTransition()
+    val angle by infiniteTransition.animateFloat(
+        initialValue = 360f,
+        targetValue = 0f,
+        animationSpec = infiniteRepeatable(
+            animation = tween(durationMillis = 5500, easing = LinearEasing),
+            repeatMode = RepeatMode.Restart
+        )
+    )
+
+    Image(
+        modifier = Modifier
+            .padding(12.dp)
+            .size(64.dp)
+            .graphicsLayer {
+                rotationZ = angle
+            },
+        painter = painterResource(resource = Res.drawable.raccoon),
+        contentDescription = "Rotating image"
+    )
+}
+
 @OptIn(ExperimentalCoilApi::class)
 @Composable
-fun RotatingImage(imageUrl: String) {
+fun RotatingImageFromUrl(imageUrl: String) {
     setSingletonImageLoaderFactory { context ->
         getAsyncImageLoader(context)
     }
@@ -75,14 +106,14 @@ fun RotatingImage(imageUrl: String) {
     )
 
     SubcomposeAsyncImage(
-        model = imageUrl,
-        contentDescription = imageUrl.takeLast(5),
         modifier = Modifier
             .padding(12.dp)
             .size(64.dp)
             .graphicsLayer {
                 rotationZ = angle
-            }
+            },
+        model = imageUrl,
+        contentDescription = imageUrl.takeLast(5),
     )
 }
 
