@@ -1,27 +1,62 @@
 package com.rvcoding.pedropeapp
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import coil3.ImageLoader
+import coil3.PlatformContext
+import coil3.annotation.ExperimentalCoilApi
+import coil3.compose.SubcomposeAsyncImage
+import coil3.compose.setSingletonImageLoaderFactory
+import coil3.request.crossfade
+import coil3.util.DebugLogger
 import com.rvcoding.pedropeapp.presentation.VideoScreen
+import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
+@OptIn(ExperimentalCoilApi::class, ExperimentalResourceApi::class)
 @Composable
 @Preview
 fun App() {
+    setSingletonImageLoaderFactory { context ->
+        getAsyncImageLoader(context)
+    }
+
     MaterialTheme {
-        Column(
+        Box(
             modifier = Modifier
-                .fillMaxWidth()
+                .fillMaxHeight()
                 .background(color = Color.Black),
-            horizontalAlignment = Alignment.CenterHorizontally
+            contentAlignment = Alignment.BottomEnd
         ) {
-            VideoScreen()
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(color = Color.Black),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                VideoScreen()
+            }
+
+            SubcomposeAsyncImage(
+                modifier = Modifier.padding(12.dp).size(64.dp),
+                model = "https://yt3.googleusercontent.com/BAC0XLkL-GL6oq1MFWRRxV7GqJMZC7vbh0Q6QMg753E6oJZngV33QQ6cvAnZWLB5OOx9nOh7KSQ=s900-c-k-c0x00ffffff-no-rj",
+                contentDescription = "Raccoon Image",
+            )
+
         }
     }
 }
+
+fun getAsyncImageLoader(context: PlatformContext) =
+    ImageLoader.Builder(context).crossfade(true).logger(DebugLogger()).build()

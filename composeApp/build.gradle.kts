@@ -27,10 +27,14 @@ kotlin {
     sourceSets {
         
         androidMain.dependencies {
+            implementation(libs.ktor.client.okhttp)
+
             implementation(libs.compose.ui.tooling.preview)
             implementation(libs.androidx.activity.compose)
         }
         commonMain.dependencies {
+            implementation(libs.ktor.client.core)
+
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)
@@ -54,8 +58,14 @@ kotlin {
             implementation(libs.media3.ui)
             implementation(libs.media3.exoplayer)
             implementation(libs.media3.session)
+
+            implementation(libs.coil.compose.core)
+            implementation(libs.coil.compose)
+            implementation(libs.coil.mp)
+            implementation(libs.coil.network.ktor)
         }
         iosMain.dependencies {
+            implementation(libs.ktor.client.darwin)
         }
     }
 }
