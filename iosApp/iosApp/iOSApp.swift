@@ -4,10 +4,11 @@ import ComposeApp
 @main
 struct iOSApp: App {
 
+    let appDelegate = AppDelegate()
+
     init() {
         KoinModuleKt.initializeKoin()
         UIApplication.shared.isIdleTimerDisabled = true
-        let appDelegate = AppDelegate()
         UIApplication.shared.delegate = appDelegate
     }
 
